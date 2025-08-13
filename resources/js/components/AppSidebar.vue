@@ -24,7 +24,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Github Repo',
-        href: 'https://github.com/zysim/best-web-test',
+        href: 'https://github.com/zysim/BestWebTest',
         icon: Folder,
     },
 ];

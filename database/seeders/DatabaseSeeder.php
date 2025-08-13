@@ -30,7 +30,10 @@ class DatabaseSeeder extends Seeder
             Category::factory(6)
                 ->has(
                     Product::factory(12)
-                        ->sequence(fn (Sequence $sequence) => ['name' => "Product $sequence->index"])
+                        ->sequence(fn (Sequence $sequence) => [
+                            'name' => "Product $sequence->index",
+                            'enabled' => rand(1, 2) === 1 ? 1 : 0,
+                        ])
                 )
                 ->sequence(fn (Sequence $sequence) => ['name' => "Category $sequence->index"])
                 ->create();

@@ -49,9 +49,18 @@ function addCategoryIdToUrl(from: string) {
 const props = defineProps<{
     products: Paginated<Product>,
     categoryId: number | null,
+    status: 'enabled' | 'disabled' | null,
 }>()
 
 const categoryId = ref<string>(props.categoryId === null ? '' : props.categoryId.toString(10))
+const status = ref<'enabled' | 'disabled'>(props.status === null ? 'enabled' : props.status)
+
+function updateStatusFilter() {
+    if (status.value === null) return
+    const params = new URLSearchParams(location.search)
+    params.append('status', status.value)
+    location.search = params.toString()
+}
 
 function updateCategoryFilter() {
     if (categoryId.value === null) return
@@ -68,6 +77,13 @@ function updateCategoryFilter() {
         <a :href="route('products.store')">
             <Button variant="default"><Icon name="plus" />New</Button>
         </a>
+        <div class="flex justify-between gap-2">
+            <Label for="status">Filter by status:</Label>
+            <select id="status" v-model="status" @change="updateStatusFilter">
+                <option value="enabled">Enabled</option>
+                <option value="disabled">Disabled</option>
+            </select>
+        </div>
         <form @submit.prevent="updateCategoryFilter" class="flex justify-between">
             <Label for="category-id">Filter by Category:</Label>
             <Input id="category-id" v-model="categoryId" />

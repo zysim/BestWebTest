@@ -18,15 +18,19 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $categoryId = $request->query('categoryId');
+        $status = $request->query('status');
         $collection = Product::latest('updated_at')
                 ->with('category')
                 ->when($categoryId, function (Builder $query, string $categoryId) {
                     return $query->where('category_id', intval($categoryId));
                 })
+                ->when($status, function (Builder $query, string $status) {
+                    return $query->where('enabled', $status === "enabled");
+                })
                 ->paginate(config('app.paginate'))
                 ->through(fn ($product) => new ProductResource($product));
 
-        return Inertia::render('products/Index', ['products' => $collection, 'categoryId' => $categoryId]);
+        return Inertia::render('products/Index', ['products' => $collection, 'categoryId' => $categoryId, 'status' => $status]);
     }
 
     /**

@@ -28,3 +28,4 @@ Make sure you have [all the necessary tooling installed.](https://laravel.com/do
 * Configure Wayfinder ([link to docs](https://github.com/laravel/vite-plugin-wayfinder))
 * Implement [event broadcasting](https://laravel.com/docs/master/eloquent#events) to disable all related products on (soft-)deleting a category.
 * Implement custom guard for mutative + destructive API routes for products and categories (currently we have to code User->is_admin checks in the controller actions)
+* Form error-handling
